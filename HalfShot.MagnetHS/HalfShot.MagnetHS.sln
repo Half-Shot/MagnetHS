@@ -29,7 +29,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatastoreService", "Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E235701C-3ECC-4CB7-9A4A-7D615BE29065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoomService", "Services\RoomService\RoomService.csproj", "{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomService", "Services\RoomService\RoomService.csproj", "{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB7F6D8F-1D0B-4D6B-8DCC-076C04F73560}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\docs\message_queueing.md = ..\docs\message_queueing.md
+		..\README.md = ..\README.md
+		..\docs\services.md = ..\docs\services.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{CB03B415-2C82-4109-B09F-8984B2BBE158}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\message_queueing.md = ..\docs\message_queueing.md
+		..\docs\services.md = ..\docs\services.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -98,6 +112,7 @@ Global
 		{1BFE5B98-B238-4B4B-923A-028506D84C88} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{F49C93A9-1409-4788-9404-34FC0707F2E6} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
+		{CB03B415-2C82-4109-B09F-8984B2BBE158} = {EB7F6D8F-1D0B-4D6B-8DCC-076C04F73560}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E059E253-A16E-409C-B4F8-01FA4E998838}
