@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>HalfShot.MagnetHS.MessageQueue.Connector</RootNamespace>
+    <AssemblyName>MagnetHS.MessageQueue.Connector</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MessageQueue\MessageQueue.csproj" />
+    <ProjectReference Include="..\ZeroMQ\MessageQueue.ZMQ.csproj" />
+  </ItemGroup>
+
+</Project>

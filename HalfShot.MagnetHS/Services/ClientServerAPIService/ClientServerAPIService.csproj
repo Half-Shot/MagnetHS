@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>HalfShot.MagnetHS.ClientServerAPIService</RootNamespace>
+    <AssemblyName>MagnetHS.ClientServerAPIService</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\build\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\Release\netcoreapp2.0\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Requests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataTransformer\DataTransformer.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\Connector\MessageQueue.Connector.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\MessageQueue\MessageQueue.csproj" />
+  </ItemGroup>
+
+</Project>

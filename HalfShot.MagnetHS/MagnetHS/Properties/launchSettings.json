@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MagnetHS": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Projects\\MagnetHS\\HalfShot.MagnetHS\\build\\Debug\\netcoreapp2.0"
+    }
+  }
+}
