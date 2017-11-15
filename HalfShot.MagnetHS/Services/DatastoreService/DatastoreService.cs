@@ -15,6 +15,8 @@ namespace HalfShot.MagnetHS.DatastoreService
         static List<IDatastore> datastores;
         static void Main(string[] args)
         {
+            Logger.StartLogger();
+            Logger.Info("Started DatastoreService");
             TestMemoryDBPopulator.PopulateDB();
             datastores = new List<IDatastore>();
             datastores.Add(new ProfileDatastore(TimeSpan.FromSeconds(30)));
@@ -24,12 +26,15 @@ namespace HalfShot.MagnetHS.DatastoreService
             while (true)
             {
                 request = IncomingQueue.ListenForRequest();
+                Logger.Debug($"Got request {request.GetType().Name}");
                 foreach (IDatastore datastore in datastores)
                 {
                     if (datastore.CanHandleRequest(request))
                     {
+                        Logger.Debug($"Request is being handled by {datastore.GetType().Name}");
                         var response = datastore.RouteRequest(request);
                         IncomingQueue.Respond(response);
+                        Logger.Debug($"Request handled");
                         break;
                     }
                 }

@@ -7,7 +7,8 @@ namespace HalfShot.MagnetHS.MessageQueue
     {
         User,
         Datastore,
-        Room
+        Room,
+        Logging
     }
 
     public class MQConnector
@@ -24,6 +25,8 @@ namespace HalfShot.MagnetHS.MessageQueue
                     return "tcp://localhost:5556";
                 case EMQService.Room:
                     return "tcp://localhost:5557";
+                case EMQService.Logging:
+                    return "tcp://localhost:5558";
                 default:
                     throw new InvalidOperationException("Unknown service");
             }

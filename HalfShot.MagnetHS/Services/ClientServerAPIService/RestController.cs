@@ -59,11 +59,27 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
                         }
                         catch (RestError ex)
                         {
+                            Logger.Debug($"RestError encountered processing request: {ex.Message}", ctx.RequestId);
+                            Logger.Debug($"Inner exception: {ex.InnerException?.Message}", ctx.RequestId);
                             context.Response.StatusCode = ex.StatusCode;
-                            using (var stream = ctx.DataTransformer.ToStream(new Responses.ErrorResponse()
+                            using (var stream = ctx.DataTransformer.ToStream(new ErrorResponse()
                             {
                                 errcode = ex.ErrorCode,
                                 error = ex.Message
+                            }))
+                            {
+                                stream.CopyTo(ctx.HttpContext.Response.OutputStream);
+                            }
+                            ctx.HttpContext.Response.OutputStream.Close();
+                        }
+                        catch(Exception ex)
+                        {
+                            Logger.Error($"A exception fell through while processing a request: {ex.ToString()} {ex.Message}", ctx.RequestId);
+                            context.Response.StatusCode = 500;
+                            using (var stream = ctx.DataTransformer.ToStream(new ErrorResponse()
+                            {
+                                errcode = "M_UNKNOWN",
+                                error = "A fatal internal error occured while handling the request"
                             }))
                             {
                                 stream.CopyTo(ctx.HttpContext.Response.OutputStream);
@@ -164,7 +180,6 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
 
         protected virtual void InvokeRestMethod(MethodInfo method, RestContext context)
         {
-            context.SetContentType();
             try
             {
                 method.Invoke(this, new object[] { context });

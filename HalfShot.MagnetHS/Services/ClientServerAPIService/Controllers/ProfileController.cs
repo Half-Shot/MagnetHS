@@ -5,6 +5,8 @@ using HalfShot.MagnetHS.MessageQueue;
 using HalfShot.MagnetHS.CommonStructures.Requests;
 using HalfShot.MagnetHS.CommonStructures.Responses;
 using HalfShot.MagnetHS.ClientServerAPIService.Exceptions;
+using System.IO;
+
 namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
 {
     [RestPath("profile")]
@@ -39,7 +41,10 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
             Dictionary<string, string> keys;
             try
             {
-                keys = context.DataTransformer.FromStream<Dictionary<string, string>>(context.HttpContext.Request.InputStream);
+                using(var textStream = new StreamReader(context.HttpContext.Request.InputStream))
+                {
+                    keys = context.DataTransformer.FromStream<Dictionary<string, string>>(textStream);
+                }
                 if(keys == null)
                 {
                     throw new ArgumentNullException("Keys should not be null");
@@ -65,7 +70,8 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
             }
             catch (TimeoutException ex)
             {
-                throw new RestError($"Timed out while waiting for a response from the UserService.", "HalfShot_MagnetHS_ServiceTimeout", ex);
+                Logger.Warn("Timeout occured trying to talk to the UserService.", context.RequestId);
+                throw new RestError($"Timed out while waiting for a response from the UserService.", StatusResponse.ServiceTimeout, ex);
             }
             
             if(response.Succeeded) {
@@ -109,7 +115,8 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
             }
             catch (TimeoutException ex)
             {
-                throw new RestError($"Timed out while waiting for a response from the UserService.", "HalfShot_MagnetHS_ServiceTimeout", ex);
+                Logger.Warn("Timeout occured trying to talk to the UserService.", context.RequestId);
+                throw new RestError($"Timed out while waiting for a response from the UserService.", StatusResponse.ServiceTimeout, ex);
             }
             
             object cl_response = null;

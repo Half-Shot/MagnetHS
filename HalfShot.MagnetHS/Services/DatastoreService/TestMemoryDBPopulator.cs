@@ -8,6 +8,7 @@ namespace HalfShot.MagnetHS.DatastoreService
     {
         public static void PopulateDB()
         {
+            Logger.Warn("Populating the DB with TEST data!");
             UserID id = new UserID("@test:localhost");
             using (var datastore = new Datastores.ProfileDatastore(TimeSpan.MinValue))
             {

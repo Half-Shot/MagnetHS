@@ -114,6 +114,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
             }
             catch (Exception ex)
             {
+                Logger.Warn($"Encountered an exeption while doing a DB operation. {ex.Message}");
                 return new StatusResponse() { Succeeded = false, ErrorCode = "HS_DBERROR", Error = ex.Message };
             }
             return null;

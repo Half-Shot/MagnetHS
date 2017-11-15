@@ -9,6 +9,8 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
 {
     public class RestContext
     {
+        public static int RequestCounter = 0;
+
         const ERestContentType DEFAULT_CONTENTTYPE = ERestContentType.Json;
         private static Dictionary<string, ERestContentType> ContentTypeMappings = new Dictionary<string, ERestContentType> () {
             { "application/json", ERestContentType.Json},
@@ -23,10 +25,16 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
         public IDataTransformer DataTransformer { get; private set; }
         public NameValueCollection Parameters { get { return HttpContext.Request.QueryString; } }
         public Dictionary<string, string> PathParameters { get; private set; }
+        public int RequestId { get; set; }
 
         public RestContext()
         {
             PathParameters = new Dictionary<string, string>();
+            if(RequestCounter == int.MaxValue)
+            {
+                RequestCounter = 0;
+            }
+            RequestId = RequestCounter++;
         }
 
         public void AttachContext(HttpListenerContext context)
@@ -38,7 +46,7 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
             DetectExpectedType();
         }
 
-        public void SetContentType()
+        private void SetContentType()
         {
             HttpContext.Response.ContentType = ContentTypeMappings.First((kv) => kv.Value == SuggestedContentType).Key;
         }
@@ -63,7 +71,7 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
             }
         }
 
-        public void SetupDataTransformer()
+        private void SetupDataTransformer()
         {
             switch (expectedType)
             {
@@ -85,6 +93,10 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
             var match = endpointRegex.Match(path);
             foreach (Group group in match.Groups)
             {
+                if(group.Name == "0") // Ignore path match
+                {
+                    continue;
+                }
                 PathParameters.Add(group.Name, group.Success ? group.Value : null);
             }
         }

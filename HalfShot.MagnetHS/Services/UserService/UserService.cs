@@ -15,18 +15,26 @@ namespace HalfShot.MagnetHS.UserService
             while (true)
             {
                 MQRequest request = IncomingQueue.ListenForRequest();
-                MQResponse response = new StatusResponse() { ErrorCode = "HS_NOHANDLER", Error = "There is no handler for this request type.", Succeeded = false }; 
-                switch (request.GetType().Name)
+                MQResponse response = new StatusResponse() { ErrorCode = "HS_NOHANDLER", Error = "There is no handler for this request type.", Succeeded = false };
+                try
                 {
-                    case "GetProfileRequest":
-                        response = HandleGetProfileRequest(request as GetProfileRequest);
-                        break;
-                    case "SetProfileRequest":
-                        response = HandleSetProfileRequest(request as SetProfileRequest);
-                        break;
-                    default:
-                        break;
+                    switch (request.GetType().Name)
+                    {
+                        case "GetProfileRequest":
+                            response = HandleGetProfileRequest(request as GetProfileRequest);
+                            break;
+                        case "SetProfileRequest":
+                            response = HandleSetProfileRequest(request as SetProfileRequest);
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                catch (TimeoutException)
+                {
+                    response = StatusResponse.StandardTimeoutResponse("Datastore");
+                }
+
                 IncomingQueue.Respond(response);
             }
         }
