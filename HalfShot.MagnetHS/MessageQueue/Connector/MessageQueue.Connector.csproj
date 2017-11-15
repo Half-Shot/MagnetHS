@@ -6,6 +6,11 @@
     <AssemblyName>MagnetHS.MessageQueue.Connector</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MessageQueue\MessageQueue.csproj" />
     <ProjectReference Include="..\ZeroMQ\MessageQueue.ZMQ.csproj" />

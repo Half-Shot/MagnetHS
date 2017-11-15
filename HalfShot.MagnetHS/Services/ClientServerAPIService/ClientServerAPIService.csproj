@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\bin\Release\netcoreapp2.0\</OutputPath>
+    <OutputPath>..\..\build\Release</OutputPath>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\DataTransformer\DataTransformer.csproj" />
+    <ProjectReference Include="..\..\Logging\Logging.csproj" />
     <ProjectReference Include="..\..\MessageQueue\Connector\MessageQueue.Connector.csproj" />
     <ProjectReference Include="..\..\MessageQueue\MessageQueue\MessageQueue.csproj" />
   </ItemGroup>
