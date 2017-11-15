@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.IO;
 namespace HalfShot.MagnetHS.DataTransformer
 {
@@ -7,6 +8,6 @@ namespace HalfShot.MagnetHS.DataTransformer
         byte[] ToBytes(object obj);
         string ConvertToString(object obj);
         Stream ToStream(object obj);
-        T FromStream<T>(Stream stream);
+        T FromStream<T>(TextReader stream);
     }
 }

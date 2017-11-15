@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 namespace HalfShot.MagnetHS.DataTransformer
 {
     public class JSONDataTransformer : IDataTransformer
     {
-        public T FromStream<T>(Stream stream)
-        {
-            var reader = new StreamReader(stream);
-            return FromStream<T>(reader);
-        }
-
         public T FromStream<T>(TextReader stream)
         {
             return JsonConvert.DeserializeObject<T>(stream.ReadToEnd());
