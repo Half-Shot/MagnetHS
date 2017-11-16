@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Security;
-using HalfShot.MagnetHS.MessageQueue;
-using HalfShot.MagnetHS.CommonStructures.Requests;
+﻿using HalfShot.MagnetHS.CommonStructures.Requests;
 using HalfShot.MagnetHS.CommonStructures.Responses;
 using HalfShot.MagnetHS.DatastoreService.Contexts;
 using HalfShot.MagnetHS.DatastoreService.Records;
-using System.Security.Cryptography;
+using HalfShot.MagnetHS.MessageQueue;
+using System;
+using System.Linq;
 
 namespace HalfShot.MagnetHS.DatastoreService.Datastores
 {
-    class PasswordDatastore : IDisposable, IDatastore
+    class AuthDatastore : IDisposable, IDatastore
     {
 
         public StatusResponse SetPassword(SetPasswordRequest request)

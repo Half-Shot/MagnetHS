@@ -29,7 +29,7 @@ namespace HalfShot.MagnetHS.Core
             {
                 new ServiceProcessDefinition("MagnetHS.ClientServerAPIService.dll", "Client Service API", 1, Path.Combine(rootConfigPath, "csapi.service.yaml")),
                 new ServiceProcessDefinition("MagnetHS.UserService.dll", "User Service", 1, Path.Combine(rootConfigPath, "user.service.yaml")),
-                //new ServiceProcessDefinition("MagnetHS.DatastoreService.dll", "Datastore Service", 1, Path.Combine(rootConfigPath, "datastore.service.yaml")),
+                new ServiceProcessDefinition("MagnetHS.DatastoreService.dll", "Datastore Service", 1, Path.Combine(rootConfigPath, "datastore.service.yaml")),
                 new ServiceProcessDefinition("MagnetHS.LogService.dll", "Log Service", 1, Path.Combine(rootConfigPath, "log.service.yaml")),
                 //new ServiceProcessDefinition("MagnetHS.ConfigurationService.dll", "Configuration Service"),
             };

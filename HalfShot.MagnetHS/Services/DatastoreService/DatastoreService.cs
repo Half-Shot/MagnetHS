@@ -21,7 +21,7 @@ namespace HalfShot.MagnetHS.DatastoreService
             datastores = new List<IDatastore>();
             datastores.Add(new ProfileDatastore(TimeSpan.FromSeconds(30)));
             datastores.Add(new EventDatastore());
-            datastores.Add(new PasswordDatastore());
+            datastores.Add(new AuthDatastore());
             IncomingQueue = MQConnector.GetResponder(EMQService.Datastore);
             MQRequest request;
             while (true)

@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonStructures\CommonStructures.csproj" />
     <ProjectReference Include="..\Services\ClientServerAPIService\ClientServerAPIService.csproj" />
+    <ProjectReference Include="..\Services\DatastoreService\DatastoreService.csproj" />
   </ItemGroup>
 
 </Project>
