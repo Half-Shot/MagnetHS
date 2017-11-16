@@ -86,6 +86,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
                     userContext.Profiles.Add(record);
                 } else {
                     record.Value = value;
+                    record.UpdateDt = DateTime.Now;
                     userContext.Profiles.Update(record);
                 }
                 userContext.SaveChanges();

@@ -22,6 +22,14 @@ namespace HalfShot.MagnetHS.DatastoreService
                     }
                 });
             }
+            using (var datastore = new Datastores.PasswordDatastore())
+            {
+                datastore.SetPassword(new CommonStructures.Requests.SetPasswordRequest()
+                {
+                    UserId = id,
+                    Password = "password"
+                });
+            }
         }
     }
 }
