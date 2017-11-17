@@ -50,10 +50,9 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
                     throw new ArgumentNullException("Keys should not be null");
                 }
             }
-            catch (Exception) //TODO: Detect an actual parse error.
+            catch (Exception ex) //TODO: Detect an actual parse error.
             {
-                throw new RestError($"Request did not contain valid json.", "M_NOT_JSON");
-                throw;
+                throw new RestError($"Request did not contain valid json.", "M_NOT_JSON", ex);
             }
             
             if (!keys.ContainsKey(key)){

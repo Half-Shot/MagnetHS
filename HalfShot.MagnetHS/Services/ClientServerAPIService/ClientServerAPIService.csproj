@@ -18,11 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Requests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\DataTransformer\DataTransformer.csproj" />
     <ProjectReference Include="..\..\Logging\Logging.csproj" />
     <ProjectReference Include="..\..\MessageQueue\Connector\MessageQueue.Connector.csproj" />

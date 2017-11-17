@@ -28,6 +28,7 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
             controllers.Add(new ProfileController());
             controllers.Add(new RoomController());
             controllers.Add(new CreateRoomController());
+            controllers.Add(new LoginController());
             controllers.ForEach((controller) =>
             {
                 Logger.Info($"Registering endpoints for {controller.GetType().Name}");
