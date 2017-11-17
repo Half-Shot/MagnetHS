@@ -45,6 +45,48 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
             throw new NotImplementedException("Not implemented yet");
         }
 
+        [RestEndPoint("GET", "(?<roomId>.+)/invite")]
+        public void InviteToRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/join")]
+        public void JoinRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/leave")]
+        public void LeaveRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/forget")]
+        public void ForgetRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/kick")]
+        public void KickFromRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/ban")]
+        public void BanFromRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("GET", "(?<roomId>.+)/unban")]
+        public void UnbanFromRoom(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
         [RestEndPoint("PUT", "(?<roomId>.+)/state/(?<eventType>.+)")]
         public void PutRoomState(RestContext context)
         {
@@ -65,6 +107,12 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
 
         [RestEndPoint("PUT", "(?<roomId>.+)/redact/(?<eventType>.+)/?<txnId>.+)")]
         public void RedactRoomEvent(RestContext context)
+        {
+            throw new NotImplementedException("Not implemented yet");
+        }
+
+        [RestEndPoint("PUT", "(?<roomId>.+)/context/(?<eventId>.+)")]
+        public void EventContext(RestContext context)
         {
             throw new NotImplementedException("Not implemented yet");
         }
