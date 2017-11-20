@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using HalfShot.MagnetHS.MessageQueue;
+using HalfShot.MagnetHS.CommonStructures.Requests.Datastore;
 using HalfShot.MagnetHS.CommonStructures.Responses;
 
 namespace HalfShot.MagnetHS.DatastoreService.Datastores
@@ -10,7 +11,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
     {
         public bool CanHandleRequest(MQRequest request)
         {
-            return false;
+            return (request is GetEventsRequest);
         }
 
         public MQResponse RouteRequest(MQRequest request)
