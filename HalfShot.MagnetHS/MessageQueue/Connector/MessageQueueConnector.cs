@@ -8,7 +8,8 @@ namespace HalfShot.MagnetHS.MessageQueue
         User,
         Datastore,
         Room,
-        Logging
+        Logging,
+        FederationRequest,
     }
 
     public class MQConnector
