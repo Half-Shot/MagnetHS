@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using HalfShot.MagnetHS.CommonStructures.Requests;
 using HalfShot.MagnetHS.CommonStructures.Responses;
@@ -9,6 +10,7 @@ namespace HalfShot.MagnetHS.UserService
     {
         static IMessageQueue IncomingQueue;
         static IMessageQueue DbQueue;
+        private static TimeSpan LoginExpiryTime = new TimeSpan(0, 30, 0);
         static List<string> AcceptedLoginHashesCache;
         static void Main(string[] args)
         {
@@ -64,19 +66,35 @@ namespace HalfShot.MagnetHS.UserService
             {
                 var passwordCheck = new CheckPasswordRequest() { Password = request.Token, UserId = request.UserId };
                 DbQueue.Request(passwordCheck);
-                var status = DbQueue.ListenForResponse() as StatusResponse;
-                if (status.Succeeded)
+                var password_check_status = DbQueue.ListenForResponse() as StatusResponse;
+                if (password_check_status.Succeeded)
                 {
-                    // Get an access token.
+                    string deviceId;
+                    if(request.DeviceId == null)
+                    {
+                        // Create a device too.
+                        deviceId = "fakedeviceid";
+                    } else {
+                        deviceId = request.DeviceId;
+                    }
+
+                    DbQueue.Request(new CreateAccessTokenRequest()
+                    {
+                        DeviceId = deviceId,
+                        UserId = request.UserId,
+                        ExpiryDateTime = DateTime.Now + LoginExpiryTime,
+                    });
+                    var accesstoken_response = DbQueue.ListenForResponse() as AccessTokenResponse;
                     return new LoginResponse()
                     {
                         UserId = request.UserId,
-                        AccessToken = "faketoken",
+                        AccessToken = accesstoken_response.AccessTokens.First(),
+                        DeviceId = accesstoken_response.DeviceIds.First()
                     };
                 }
                 else
                 {
-                    return status;
+                    return password_check_status;
                 }
             }
             else

@@ -4,6 +4,7 @@ using HalfShot.MagnetHS.DatastoreService.Contexts;
 using HalfShot.MagnetHS.DatastoreService.Records;
 using HalfShot.MagnetHS.MessageQueue;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HalfShot.MagnetHS.DatastoreService.Datastores
@@ -15,8 +16,8 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
         {
             using (UserStoreContext userContext = new UserStoreContext())
             {
-                byte[] salt = PasswordHasher.GenerateSalt();
-                byte[] hash = PasswordHasher.HashPassword(request.Password, salt);
+                byte[] salt = HashingProvider.GenerateSalt();
+                byte[] hash = HashingProvider.HashPassword(request.Password, salt);
                 PasswordRecord record = userContext.Passwords.Find(request.UserId.ToString());
                 if (record == null)
                 {
@@ -49,7 +50,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
                 }
                 var userRecord = userRecords.First();
                 Logger.Debug($"Checking password '{request.Password}' for {request.UserId}");
-                byte[] hash = PasswordHasher.HashPassword(request.Password, userRecord.Salt);
+                byte[] hash = HashingProvider.HashPassword(request.Password, userRecord.Salt);
                 if(hash.SequenceEqual(userRecord.Hash))
                 {
                     return new StatusResponse() { Succeeded = true };
@@ -61,9 +62,55 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
             }
         }
 
+        public AccessTokenResponse CreateAccessToken(CreateAccessTokenRequest request)
+        {
+            using (UserStoreContext userContext = new UserStoreContext())
+            {
+                var record = new AccessTokenRecord()
+                {
+                    AccessToken = HashingProvider.GenerateAccessToken(),
+                    UserId = request.UserId.ToString(),
+                    DeviceId = request.DeviceId,
+                    CreationDt = DateTime.Now,
+                    ExpiryDt = request.ExpiryDateTime
+                };
+                userContext.AddAsync(record).ContinueWith((t) =>
+                {
+                    userContext.SaveChangesAsync();
+                });
+                return new AccessTokenResponse()
+                {
+                    UserId = request.UserId,
+                    AccessTokenDevices = new Dictionary<string, string>() { { record.AccessToken, record.DeviceId } }
+                };
+            }
+        }
+
+        public AccessTokenResponse GetAccessTokens(GetAccessTokensRequest request)
+        {
+            using (UserStoreContext userContext = new UserStoreContext())
+            {
+                var records = userContext.AccessTokens.Where(
+                    (rec) => rec.UserId == request.UserId.ToString()
+                    && (request.DeviceId == null || request.DeviceId == rec.DeviceId)
+                    && rec.ExpiryDt > DateTime.Now
+                );
+                Dictionary<string, string> accessTokens = new Dictionary<string, string>();
+                foreach (var record in records)
+                {
+                    accessTokens.Add(record.AccessToken, record.DeviceId);
+                }
+                return new AccessTokenResponse()
+                {
+                    UserId = request.UserId,
+                    AccessTokenDevices = accessTokens
+                };
+            }
+        }
+
         public bool CanHandleRequest(MQRequest request)
         {
-            return (request is CheckPasswordRequest) || (request is SetPasswordRequest);
+            return (request is CheckPasswordRequest) || (request is SetPasswordRequest) || (request is GetAccessTokensRequest) || (request is CreateAccessTokenRequest);
         }
 
         public MQResponse RouteRequest(MQRequest request)
@@ -77,6 +124,14 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
                 else if(request is SetPasswordRequest)
                 {
                     return SetPassword(request as SetPasswordRequest);
+                }
+                else if(request is GetAccessTokensRequest)
+                {
+                    return GetAccessTokens(request as GetAccessTokensRequest);
+                }
+                else if (request is CreateAccessTokenRequest)
+                {
+                    return CreateAccessToken(request as CreateAccessTokenRequest);
                 }
             }
             catch (Exception ex)

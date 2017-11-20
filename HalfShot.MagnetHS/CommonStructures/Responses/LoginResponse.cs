@@ -8,6 +8,7 @@ namespace HalfShot.MagnetHS.CommonStructures.Responses
     public class LoginResponse : MessageQueue.MQResponse
     {
         public UserID UserId;
+        public string DeviceId;
         public string AccessToken;
     }
 }

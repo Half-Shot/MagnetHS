@@ -35,7 +35,8 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
                 {
                     Type = ELoginType.Password,
                     UserId = new UserID(loginRequest.user),
-                    Token = loginRequest.password
+                    Token = loginRequest.password,
+                    DeviceId = loginRequest.device_id
                 };
             } else if (loginRequest.Type == ELoginType.Token) {
                 mqLoginRequest = new CommonStructures.Requests.LoginRequest()
@@ -55,13 +56,14 @@ namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
                 if(mqLoginResponse is LoginResponse)
                 {
                     var loginResponse = mqLoginResponse as LoginResponse;
-                    context.HttpContext.Response.StatusCode = 200;
                     response = new Responses.LoginResponse()
                     {
                         user_id = loginResponse.UserId.ToString(),
                         access_token = loginResponse.AccessToken,
                         home_server = "localhost",
+                        device_id = loginResponse.DeviceId,
                     };
+                    context.HttpContext.Response.StatusCode = 200;
                 }
                 else if (mqLoginResponse is StatusResponse)
                 {

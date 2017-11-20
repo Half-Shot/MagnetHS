@@ -14,6 +14,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Contexts
         public DbSet<UserRecord> Users { get; set; }
         public DbSet<ProfileRecord> Profiles { get; set; }
         public DbSet<PasswordRecord> Passwords { get; set; }
+        public DbSet<AccessTokenRecord> AccessTokens { get; set; }
         public UserStoreContext() : base()
         {
 
@@ -29,6 +30,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Contexts
             modelBuilder.Entity<ProfileRecord>().HasKey(c => new { c.UserId, c.Key });
             modelBuilder.Entity<UserRecord>().HasIndex(c => new { c.UserId });
             modelBuilder.Entity<PasswordRecord>().HasIndex(c => new { c.UserId });
+            modelBuilder.Entity<AccessTokenRecord>().HasIndex(c => new { c.AccessToken });
             /*var content = modelBuilder.Entity<BaseEvent>().Property(c => new { c.Content });
             content.HasValueGenerator((prop, type) =>
             {
