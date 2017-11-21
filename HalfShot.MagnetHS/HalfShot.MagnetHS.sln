@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogService", "Services\LogS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\Logging.csproj", "{FBA5BE70-F540-43D8-A01D-F97711341D98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageQueue.Mocks", "MessageQueue.Mocks\MessageQueue.Mocks.csproj", "{28C348D4-7533-460C-A815-49E46F2B85F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{FBA5BE70-F540-43D8-A01D-F97711341D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBA5BE70-F540-43D8-A01D-F97711341D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBA5BE70-F540-43D8-A01D-F97711341D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28C348D4-7533-460C-A815-49E46F2B85F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28C348D4-7533-460C-A815-49E46F2B85F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28C348D4-7533-460C-A815-49E46F2B85F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28C348D4-7533-460C-A815-49E46F2B85F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,6 +125,7 @@ Global
 		{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{CB03B415-2C82-4109-B09F-8984B2BBE158} = {EB7F6D8F-1D0B-4D6B-8DCC-076C04F73560}
 		{DDC3098B-3D8E-4FD9-B7D4-A901B9108B92} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
+		{28C348D4-7533-460C-A815-49E46F2B85F9} = {BD37AC20-187F-4813-BF14-D848701FDFCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E059E253-A16E-409C-B4F8-01FA4E998838}

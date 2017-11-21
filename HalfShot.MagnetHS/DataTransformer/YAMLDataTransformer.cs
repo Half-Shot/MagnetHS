@@ -23,6 +23,12 @@ namespace HalfShot.MagnetHS.DataTransformer
             return deserializer.Deserialize<T>(stream);
         }
 
+        public T FromString<T>(string data)
+        {
+            var deserializer = new Deserializer();
+            return deserializer.Deserialize<T>(data);
+        }
+
         public byte[] ToBytes(object obj)
         {
             return Encoding.UTF8.GetBytes(ConvertToString(obj));

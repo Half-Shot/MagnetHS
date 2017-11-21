@@ -6,6 +6,7 @@ namespace HalfShot.MagnetHS.CommonStructures.Responses
     public class StatusResponse : MessageQueue.MQResponse
     {
         public const string ServiceTimeout = "MGHS_SERVICETIMEOUT";
+        public const string NotFound = "M_NOT_FOUND";
 
         public bool Succeeded { get; set; } = true;
         public bool Stubbed { get; set; } = false;

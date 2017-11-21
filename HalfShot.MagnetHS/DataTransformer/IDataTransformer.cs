@@ -8,6 +8,7 @@ namespace HalfShot.MagnetHS.DataTransformer
         byte[] ToBytes(object obj);
         string ConvertToString(object obj);
         Stream ToStream(object obj);
+        T FromString<T>(string data);
         T FromStream<T>(TextReader stream);
     }
 }

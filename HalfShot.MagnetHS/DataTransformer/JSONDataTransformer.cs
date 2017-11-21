@@ -10,7 +10,12 @@ namespace HalfShot.MagnetHS.DataTransformer
     {
         public T FromStream<T>(TextReader stream)
         {
-            return JsonConvert.DeserializeObject<T>(stream.ReadToEnd());
+            return FromString<T>(stream.ReadToEnd());
+        }
+
+        public T FromString<T>(string data)
+        {
+            return JsonConvert.DeserializeObject<T>(data);
         }
 
         public string ConvertToString(object obj)
@@ -27,5 +32,6 @@ namespace HalfShot.MagnetHS.DataTransformer
         {
             return new MemoryStream(ToBytes(obj));
         }
+
     }
 }
