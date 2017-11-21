@@ -6,6 +6,7 @@ namespace HalfShot.MagnetHS.CommonStructures.Enums
 {
     public enum EMembership
     {
+        None,
         Invite,
         Join,
         Knock,
