@@ -1,20 +1,53 @@
 ﻿using System;
+using System.Collections.Generic;
 using HalfShot.MagnetHS.MessageQueue.ZMQ;
 
 namespace HalfShot.MagnetHS.MessageQueue
 {
-    public enum EMQService
-    {
-        User,
-        Datastore,
-        Room,
-        Logging,
-        FederationRequest,
-    }
-
     public class MQConnector
     {
         public static TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(10);
+        static Dictionary<EMQService, Type> serviceTypes = new Dictionary<EMQService, Type>();
+        static Type defaultType = typeof(ZeroMessageQueue);
+
+
+        public static void OverrideTypeForService<T>(EMQService service) where T: IMessageQueue
+        {
+            serviceTypes[service] = typeof(T);
+        }
+
+        public static IMessageQueue GetResponder(EMQService service)
+        {
+            IMessageQueue msgQueue = new ZeroMessageQueue();
+            msgQueue.Setup(getConnStrForService(service), EMQType.Respond);
+            msgQueue.RecieveTimeout = DefaultTimeout;
+            return msgQueue;
+        }
+
+        public static IMessageQueue GetRequester(EMQService service)
+        {
+            IMessageQueue msgQueue = new ZeroMessageQueue();
+            msgQueue.Setup(getConnStrForService(service), EMQType.Request);
+            msgQueue.RecieveTimeout = DefaultTimeout;
+            return msgQueue;
+        }
+
+        public static IMessageQueue GetPusher(EMQService service)
+        {
+            IMessageQueue msgQueue = new ZeroMessageQueue();
+            msgQueue.Setup(getConnStrForService(service), EMQType.Push);
+            msgQueue.RecieveTimeout = DefaultTimeout;
+            return msgQueue;
+        }
+
+        public static IMessageQueue GetPuller(EMQService service)
+        {
+            IMessageQueue msgQueue = new ZeroMessageQueue();
+            msgQueue.Setup(getConnStrForService(service), EMQType.Pull);
+            msgQueue.RecieveTimeout = DefaultTimeout;
+            return msgQueue;
+        }
+
         private static string getConnStrForService(EMQService service)
         {
             //TODO: Configurable connection strings
@@ -33,36 +66,13 @@ namespace HalfShot.MagnetHS.MessageQueue
             }
         }
 
-        public static IMessageQueue GetResponder(EMQService service)
+        private static Type GetTypeForService(EMQService service)
         {
-            ZeroMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.SetupResponder(getConnStrForService(service));
-            msgQueue.RecieveTimeout = DefaultTimeout;
-            return msgQueue;
-        }
-
-        public static IMessageQueue GetRequester(EMQService service)
-        {
-            ZeroMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.SetupRequester(getConnStrForService(service));
-            msgQueue.RecieveTimeout = DefaultTimeout;
-            return msgQueue;
-        }
-
-        public static IMessageQueue GetPusher(EMQService service)
-        {
-            ZeroMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.SetupPusher(getConnStrForService(service));
-            msgQueue.RecieveTimeout = DefaultTimeout;
-            return msgQueue;
-        }
-
-        public static IMessageQueue GetPuller(EMQService service)
-        {
-            ZeroMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.SetupPuller(getConnStrForService(service));
-            msgQueue.RecieveTimeout = DefaultTimeout;
-            return msgQueue;
-        }
+            if (serviceTypes.ContainsKey(service))
+            {
+                return serviceTypes[service];
+            }
+            return defaultType;
+        } 
     }
 }

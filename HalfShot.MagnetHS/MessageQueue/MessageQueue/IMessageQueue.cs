@@ -9,5 +9,6 @@ namespace HalfShot.MagnetHS.MessageQueue
         void Respond(MQResponse request);
         MQRequest ListenForRequest();
         MQResponse ListenForResponse();
+        void Setup(string connectionString, EMQType mqType);
     }
 }

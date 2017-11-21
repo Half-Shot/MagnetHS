@@ -11,28 +11,30 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
 
         public TimeSpan RecieveTimeout { get; set; } = TimeSpan.MaxValue;
 
-        public void SetupResponder(string bindAddress)
-        {
-            socket = new ResponseSocket();
-            socket.Bind(bindAddress);
-        }
 
-        public void SetupRequester(string connectionAddress)
+        public void Setup(string connectionString, EMQType mqType)
         {
-            socket = new RequestSocket();
-            socket.Connect(connectionAddress);
-        }
-
-        public void SetupPusher(string connectionAddress)
-        {
-            socket = new PushSocket();
-            socket.Connect(connectionAddress);
-        }
-
-        public void SetupPuller(string connectionAddress)
-        {
-            socket = new PullSocket();
-            socket.Bind(connectionAddress);
+            switch (mqType)
+            {
+                case EMQType.Request:
+                    socket = new RequestSocket();
+                    socket.Bind(connectionString);
+                    break;
+                case EMQType.Respond:
+                    socket = new ResponseSocket();
+                    socket.Connect(connectionString);
+                    break;
+                case EMQType.Push:
+                    socket = new PushSocket();
+                    socket.Connect(connectionString);
+                    break;
+                case EMQType.Pull:
+                    socket = new PullSocket();
+                    socket.Bind(connectionString);
+                    break;
+                default:
+                    throw new NotSupportedException("Cannot create a queue of this type. Not supported!");
+            }
         }
 
         public MQRequest ListenForRequest()
@@ -75,6 +77,5 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
                 socket.Dispose();
             }
         }
-
     }
 }
