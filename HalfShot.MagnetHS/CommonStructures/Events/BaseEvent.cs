@@ -5,13 +5,28 @@ using System.Text;
 
 namespace HalfShot.MagnetHS.CommonStructures.Events
 {
+    [Serializable]
     public abstract class BaseEvent
     {
         protected static JSONDataTransformer jsonTransformer = new JSONDataTransformer();
-        public object Content { get; set; }
+        private object content;
+        private string json;
+        public object Content {
+            get {
+                return content;
+            }
+            set {
+                content = value;
+                json = jsonTransformer.ConvertToString(Content);
+            }
+        }
         public string JsonContent { get
             {
-                return jsonTransformer.ConvertToString(Content);
+                return json;
+            }
+            set
+            {
+                json = value;
             }
         }
         public string Type { get; set; }

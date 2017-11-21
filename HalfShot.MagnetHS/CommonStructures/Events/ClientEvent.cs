@@ -11,6 +11,7 @@ namespace HalfShot.MagnetHS.CommonStructures.Events
         public EventID EventId {get;set;}
         public RoomID RoomId {get;set;}
         public UserID Sender {get;set;}
-        public DateTime OriginServerTs {get;set;}
+        public DateTime OriginServerTs {get;set; }
+        public string StateKey { get; set; }
     }
 }

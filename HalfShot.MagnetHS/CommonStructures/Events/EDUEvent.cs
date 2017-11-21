@@ -5,6 +5,7 @@ using System.Text;
 
 namespace HalfShot.MagnetHS.CommonStructures.Events
 {
+    [Serializable]
     public class EDUEvent : BaseEvent
     {
         
