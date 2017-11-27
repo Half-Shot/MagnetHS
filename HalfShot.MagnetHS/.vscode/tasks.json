@@ -10,6 +10,16 @@
                 "${workspaceFolder}"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "test",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "test",
+                "/home/user/GitRepos/MagnetHS/HalfShot.MagnetHS/Tests"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
