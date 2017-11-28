@@ -6,6 +6,7 @@ namespace HalfShot.MagnetHS.CommonStructures.Enums
 {
     public enum EJoinRule
     {
+        Unknown,
         Public,
         Invite,
         Knock,

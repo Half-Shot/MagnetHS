@@ -8,12 +8,11 @@ namespace HalfShot.MagnetHS.RoomService
     {
         public static IMessageQueue FederationRequest;
         static IMessageQueue IncomingQueue;
-        public static IMessageQueue DbQueue;
         static void Main(string[] args)
         {
             FederationRequest =  MQConnector.GetResponder(EMQService.FederationRequest);
             IncomingQueue = MQConnector.GetResponder(EMQService.Room);
-            DbQueue = MQConnector.GetRequester(EMQService.Datastore);
+            DbRoomEventStore store = new DbRoomEventStore();
             while (true)
             {
                 MQRequest request = IncomingQueue.ListenForRequest();

@@ -18,7 +18,7 @@ namespace HalfShot.MagnetHS.RoomService
 
         private void CreateRoom()
         {
-            RoomID roomId = RoomID.GenerateRoomId("localhost");
+            RoomID roomId = RoomID.Generate("localhost");
             RoomGraph graph = new RoomGraph(roomId);
             // Insert creation event.
             graph.InsertEvents(new PDUEvent()

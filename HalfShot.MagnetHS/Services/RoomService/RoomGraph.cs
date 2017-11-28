@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using HalfShot.MagnetHS.MessageQueue;
 using HalfShot.MagnetHS.CommonStructures;
+using HalfShot.MagnetHS.CommonStructures.Room;
 using HalfShot.MagnetHS.CommonStructures.Enums;
 using HalfShot.MagnetHS.CommonStructures.Events;
 using HalfShot.MagnetHS.CommonStructures.Events.Content;
@@ -16,22 +17,24 @@ namespace HalfShot.MagnetHS.RoomService
     public class RoomGraph
     {
         static IMessageQueue FederationRequest = Program.FederationRequest;
-        static IMessageQueue DbQueue = Program.DbQueue;
+        IRoomEventStore eventStore;
         public RoomID RoomId { get; private set;}
         public EJoinRule JoinRule { get; private set; }
         public RoomPowerLevels PowerLevels {get; private set;}
         public bool Federated {get; private set;}
         public int Depth { get; private set; }
-
         private Dictionary<UserID, EMembership> memberStates;
-
         private Dictionary<EventID, PDUEvent> eventCache;
+
         public RoomGraph(RoomID roomId, bool federated = true) {
             RoomId = roomId;
             eventCache = new Dictionary<EventID, PDUEvent>();
             Federated = federated;
         }
-        
+
+        public void SetEventSource(IRoomEventStore source) {
+            eventStore = source;
+        }
 
         public void InsertEvents(params PDUEvent[] pduEvents)
         {
@@ -48,12 +51,28 @@ namespace HalfShot.MagnetHS.RoomService
                 {
                     throw new Exception("A type must be given.");
                 }
+                if (pduEvent.EventId == null)
+                {
+                    throw new Exception("An eventid must be given.");
+                }
+                if(!IsEventAuthorized(pduEvent)) {
+                    throw new Exception("Event is not authorised");
+                }
             }
-            DbQueue.Request(new InsertEventsRequest()
+
+            try
             {
-                Events = events
-            });
-            StatusResponse response = DbQueue.ListenForResponse() as StatusResponse;
+                eventStore.PutEvent(pduEvents);
+                foreach (var ev in pduEvents)
+                {
+                    eventCache.Add(ev.EventId, ev);
+                    Depth++;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void InsertEvent(ClientEvent clientEvent) {
@@ -71,39 +90,28 @@ namespace HalfShot.MagnetHS.RoomService
         }
 
         private PDUEvent getEvent(EventID eventId){
+            PDUEvent ev;
+
             if(eventCache.ContainsKey(eventId)){
                 return eventCache[eventId];
             }
-            //TODO: Fetch from DB.
-            DbQueue.Request(new GetEventsRequest()
-            {
-                RoomId = RoomId,
-                EventsToGet = new List<EventID>() { eventId }
-            });
-            MQResponse response = DbQueue.ListenForResponse();
-            if(response is StatusResponse)
-            {
-                throw new Exception((response as StatusResponse).Error);
-            } else if (response is EventsResponse) {
-                var eventResponse = response as EventsResponse;
-                if(eventResponse.Events.Count == 1)
-                {
-                    eventCache.Add(eventResponse.Events[0].EventId, eventResponse.Events[0]);
-                    return eventResponse.Events[0];
-                } else {
-                    throw new Exception("Unexpected count of events returned");
-                }
-            } else {
-                throw new Exception("Unexpected response message from DBStore");
+            try {
+                ev = eventStore.GetEvent(eventId).FirstOrDefault();
+            } catch (Exception ex) {
+                throw new Exception("Exception when trying to retrieve from the event source.", ex);
+            }
+            
+            if(ev != null) {
+                eventCache.Add(ev.EventId, ev);
+                return ev;
             }
 
             if (Federated) {
                 //TODO: Fetch from Federation handler.
                 //FederationRequest.Request();
                 //FederationRequest.ListenForResponse();
-            } else {
-                return null;
             }
+            return null;
         }
 
         public bool IsEventAuthorized(PDUEvent ev)
@@ -120,7 +128,7 @@ namespace HalfShot.MagnetHS.RoomService
                 return false;
             } else if (ev.Type == "m.room.power_levels") {
                 //TODO: Find previous events -- allow if none exist.
-                var senderPowerLevel = GetPowerlevel(ev.Sender);
+                int senderPowerLevel = GetPowerlevel(ev.Sender);
                 if(PowerLevels.Ban > senderPowerLevel ||
                    PowerLevels.EventsDefault > senderPowerLevel ||
                    PowerLevels.Invite > senderPowerLevel ||
@@ -147,11 +155,23 @@ namespace HalfShot.MagnetHS.RoomService
         }
 
         private EMembership GetMembership(UserID user) {
-            return memberStates.GetValueOrDefault(user, EMembership.None);
+            var state = memberStates.GetValueOrDefault(user, EMembership.None);
+            if (state == EMembership.None) { // DB Store
+                PDUEvent ev = eventStore.GetStateEvent("m.room.member", user.ToString());
+                if(ev != null) {
+                    eventCache.Add(ev.EventId, ev);
+                }
+                //TODO: Decode
+            }
+            if (state == EMembership.None) { // Federation
+
+            }
+            return state;
         }
 
         private int GetPowerlevel(UserID user) {
             return PowerLevels.Users.GetValueOrDefault(user, PowerLevels.UsersDefault);
+            //TODO: If none, fetch event based on critera.
         }
 
         private bool IsMemberEventAuthorized(PDUEvent ev) {
