@@ -12,5 +12,9 @@ namespace HalfShot.MagnetHS.CommonStructures
         {
 
         }
+
+        public static UserID Generate(string domain) {
+            return new UserID($"@{MatrixCommonId.GenerateLocalpart()}:{domain}");
+        }
     }
 }

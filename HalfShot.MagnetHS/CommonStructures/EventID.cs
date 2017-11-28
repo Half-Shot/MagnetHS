@@ -10,5 +10,9 @@ namespace HalfShot.MagnetHS.CommonStructures
         {
 
         }
+
+        public static EventID Generate(string domain) {
+            return new EventID($"${MatrixCommonId.GenerateLocalpart()}:{domain}");
+        }
     }
 }

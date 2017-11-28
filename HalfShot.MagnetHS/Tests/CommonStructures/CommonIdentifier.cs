@@ -45,5 +45,12 @@ namespace HalfShot.MagnetHS.Tests.CommonStructures
             Assert.IsFalse(new UserID("@test:localhost") == new UserID("@dog:localhost"));
             Assert.IsFalse(new UserID("@test:localhost") == new UserID("@test:mutt"));
         }
+
+        [TestMethod]
+        public void TestUserIdEqualityNull()
+        {
+            Assert.IsFalse(new UserID("@test:localhost") == null);
+            Assert.IsTrue(new UserID("@test:localhost") != null);
+        }
     }
 }

@@ -16,3 +16,6 @@
 *.cache
 *.dev.json
 *.deps.json
+
+# Do not store ide settings
+/HalfShot.MagnetHS/.idea/
