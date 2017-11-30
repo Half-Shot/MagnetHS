@@ -29,6 +29,7 @@ namespace HalfShot.MagnetHS.RoomService
         public RoomGraph(RoomID roomId, bool federated = true) {
             RoomId = roomId;
             eventCache = new Dictionary<EventID, PDUEvent>();
+            memberStates = new Dictionary<UserID, EMembership>();
             Federated = federated;
         }
 
@@ -98,8 +99,27 @@ namespace HalfShot.MagnetHS.RoomService
         }
 
         public void FetchState()
-        {
-
+        {   
+            PDUEvent ev_joinrules = eventStore.GetStateEvent("m.room.join_rules");
+            if (ev_joinrules != null)
+            {
+                JoinRule = (ev_joinrules.Content as RoomJoinRules).JoinRule;
+            }
+            else
+            {
+                JoinRule = EJoinRule.Private;
+            }
+            
+            PDUEvent ev_powerlevels = eventStore.GetStateEvent("m.room.power_levels");
+            if (ev_powerlevels != null)
+            {
+                PowerLevels = ev_powerlevels.Content as RoomPowerLevels;
+            }
+            else
+            {
+                PowerLevels = new RoomPowerLevels();
+            }
+            
         }
 
         private PDUEvent getEvent(EventID eventId){
@@ -129,7 +149,6 @@ namespace HalfShot.MagnetHS.RoomService
 
         public bool IsEventAuthorized(PDUEvent ev)
         {
-            int RequiredPowerLevel = PowerLevels.Events.GetValueOrDefault(ev.Type, PowerLevels.EventsDefault);
             if(ev.Type == "m.room.create")
             {
                 return ev.Depth == 0;
@@ -137,7 +156,9 @@ namespace HalfShot.MagnetHS.RoomService
                 return IsMemberEventAuthorized(ev);
             } else if (GetMembership(ev.Sender) != EMembership.Join) {
                 return false;
-            } else if(RequiredPowerLevel > GetPowerlevel(ev.Sender)){
+            } else if(
+                PowerLevels.Events.GetValueOrDefault(ev.Type, PowerLevels.EventsDefault) > GetPowerlevel(ev.Sender)
+                ){
                 return false;
             } else if (ev.Type == "m.room.power_levels") {
                 //TODO: Find previous events -- allow if none exist.
@@ -193,7 +214,7 @@ namespace HalfShot.MagnetHS.RoomService
             if(member.Membership == EMembership.Join) {
                 if(ev.PreviousEvents.Count == 1) {
                     var previousEv = getEvent(ev.PreviousEvents[0].EventId);
-                    if (previousEv.Type == "m.room.create") {
+                    if (previousEv?.Type == "m.room.create") {
                         if (ev.StateKey == previousEv.Sender.ToString()) {
                             return true;
                         }

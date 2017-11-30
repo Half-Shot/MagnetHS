@@ -32,9 +32,8 @@ namespace HalfShot.MagnetHS.Tests.DataTransformer
         [TestMethod]
         public void TestJSONConvertToString()
         {
-            var obj = new JSONDataTransformer().ConvertToString(new TestJSONDataTransformerObj() { TestString = "AWonderfulTest" });
-            Assert.IsNotNull(obj);
-            Assert.IsTrue(obj.Contains("AWonderfulTest"));
+            string result = new JSONDataTransformer().ConvertToString(new TestJSONDataTransformerObj() { TestString = "AWonderfulTest" });
+            Assert.AreEqual("{\"TestString\":\"AWonderfulTest\"}", result);
         }
 
         [TestMethod]

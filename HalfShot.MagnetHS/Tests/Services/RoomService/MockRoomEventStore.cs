@@ -21,7 +21,7 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
 
         public IEnumerable<PDUEvent> GetEvent(params EventID[] eventId)
         {
-            return GetEvent(eventId);
+            return GetEvent(eventId.ToString());
         }
 
         public IEnumerable<PDUEvent> GetEvent(params string[] eventId)
@@ -31,7 +31,6 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
 
         public PDUEvent GetStateEvent(string type, string stateKey = null, int stateDepth = 0)
         {
-            //TODO: Stubbed.
             return events.Where((ev) => ev.Type == type && 
             (stateKey == null) || (ev.StateKey == stateKey)
             ).Skip(stateDepth).FirstOrDefault();
