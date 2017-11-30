@@ -1,24 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>HalfShot.MagnetHS.CommonStructures</RootNamespace>
     <AssemblyName>MagnetHS.CommonStructures</AssemblyName>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\DataTransformer\DataTransformer.csproj" />
     <ProjectReference Include="..\MessageQueue\MessageQueue\MessageQueue.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Datastore\" />
     <Folder Include="Requests\Data\" />
   </ItemGroup>
-
 </Project>
