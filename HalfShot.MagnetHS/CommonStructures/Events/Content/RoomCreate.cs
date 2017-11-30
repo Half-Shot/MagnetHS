@@ -5,7 +5,7 @@ using System.Text;
 namespace HalfShot.MagnetHS.CommonStructures.Events.Content
 {
     [Serializable]
-    public class RoomCreate
+    public class RoomCreate : IEventContent
     {
         public UserID Creator { get; set; }
         public Boolean Federate { get; set; } = true;

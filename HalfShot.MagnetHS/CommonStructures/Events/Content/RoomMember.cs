@@ -6,11 +6,12 @@ using HalfShot.MagnetHS.CommonStructures.Enums;
 namespace HalfShot.MagnetHS.CommonStructures.Events.Content
 {
     [Serializable]
-    public class RoomMember
+    public class RoomMember : IEventContent
     {
         public string DisplayName { get; set; }
         public string AvatarUrl { get; set; }
         public EMembership Membership { get; set; }
+    
         public bool IsDirect { get; set; }
         //public ThirdPatyInvite
     }
