@@ -38,11 +38,27 @@ namespace HalfShot.MagnetHS.RoomService
 
         public void InsertEvents(params PDUEvent[] pduEvents)
         {
+            insertPduEvents(pduEvents.ToList(), ERoomGraphInsertBehaviour.ChainEvents);
+        }
+
+        private void insertPduEvents(List<PDUEvent> eventList, ERoomGraphInsertBehaviour behaviour)
+        {
             // Validate the event.
             // Get the tip of the graph.
-            List<PDUEvent> events = pduEvents.ToList();
-            foreach (var pduEvent in pduEvents)
+            PDUEvent previousEvent = null;
+            foreach (var pduEvent in eventList)
             {
+                if (behaviour.HasFlag(ERoomGraphInsertBehaviour.ChainEvents) &&
+                    previousEvent!= null &&
+                    pduEvent.PreviousEvents.Count == 0)
+                {
+                    pduEvent.PreviousEvents.Add(new EventHash()
+                    {
+                        EventId = previousEvent.EventId,
+                        SHA256 = previousEvent.CalculateHash(EEventHashType.Sha256)
+                    });
+                }
+                
                 if (pduEvent.RoomId != RoomId)
                 {
                     throw new Exception("RoomId does not match.");
@@ -58,20 +74,17 @@ namespace HalfShot.MagnetHS.RoomService
                 if(!IsEventAuthorized(pduEvent)) {
                     throw new Exception("Event is not authorised");
                 }
+                previousEvent = pduEvent;
             }
 
             try
             {
-                eventStore.PutEvent(pduEvents);
-                foreach (var ev in pduEvents)
+                eventStore.PutEvent(eventList.ToArray());
+                foreach (var ev in eventList)
                 {
                     eventCache.Add(ev.EventId, ev);
                     Depth++;
                 }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 

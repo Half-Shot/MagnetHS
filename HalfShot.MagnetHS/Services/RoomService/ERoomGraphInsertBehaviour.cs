@@ -2,6 +2,7 @@
 {
     public enum ERoomGraphInsertBehaviour
     {
-        
+        DoNotChainEvents,
+        ChainEvents,
     }
 }
