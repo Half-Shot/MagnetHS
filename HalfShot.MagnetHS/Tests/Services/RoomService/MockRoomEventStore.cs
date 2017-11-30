@@ -21,7 +21,7 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
 
         public IEnumerable<PDUEvent> GetEvent(params EventID[] eventId)
         {
-            return GetEvent(eventId);
+            return GetEvent(eventId.ToString());
         }
 
         public IEnumerable<PDUEvent> GetEvent(params string[] eventId)

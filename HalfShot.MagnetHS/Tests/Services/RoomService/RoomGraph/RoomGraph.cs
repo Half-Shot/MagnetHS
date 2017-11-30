@@ -6,7 +6,7 @@ using HalfShot.MagnetHS.CommonStructures;
 using HalfShot.MagnetHS.CommonStructures.Enums;
 using HalfShot.MagnetHS.RoomService;
 
-namespace HalfShot.MagnetHS.Tests.Services.RoomService.RoomGraph
+namespace HalfShot.MagnetHS.Tests.Services.RoomService
 {
     [TestClass]
     public class TestRoomGraph

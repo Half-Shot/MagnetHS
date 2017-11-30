@@ -53,6 +53,7 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
                     }
                 }
             );
+            graph.FetchState();
             return graph;
         }
     }

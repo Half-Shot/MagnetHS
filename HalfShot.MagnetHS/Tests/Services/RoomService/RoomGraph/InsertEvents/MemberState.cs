@@ -19,51 +19,73 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService.InsertEvents
     {
         [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void TestInsertEventsPDU_SendUnjoinedUser(){
-            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(roomId,creatorUser);
-            graph.InsertEvents(new PDUEvent(){
+        public void TestInsertEventsPDU_SendUnjoinedUser()
+        {
+            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(
+                TestRoomGraph.roomId,
+                TestRoomGraph.creatorUser
+            );
+            graph.InsertEvents(new PDUEvent()
+            {
                 Type = "m.room.message",
-                Sender = joinerUser,
-                RoomId = roomId,
+                Sender = TestRoomGraph.joinerUser,
+                RoomId = TestRoomGraph.roomId,
                 EventId = EventID.Generate(RoomGraphTestUtil.DOMAIN),
-                Content = new { body = "Hello world!" }
+                Content = new {body = "Hello world!"}
             });
         }
 
         [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void TestInsertEventsPDU_UserJoin_Private_Join(){
-            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(roomId, creatorUser, EJoinRule.Private);
-            graph.InsertEvents(new PDUEvent(){
+        public void TestInsertEventsPDU_UserJoin_Private_Join()
+        {
+            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(
+                TestRoomGraph.roomId,
+                TestRoomGraph.creatorUser,
+                EJoinRule.Private
+            );
+            graph.InsertEvents(new PDUEvent()
+            {
                 Type = "m.room.member",
-                Sender = joinerUser,
-                RoomId = roomId,
+                Sender = TestRoomGraph.joinerUser,
+                RoomId = TestRoomGraph.roomId,
                 EventId = EventID.Generate(RoomGraphTestUtil.DOMAIN),
-                Content = new RoomMember() {
+                Content = new RoomMember()
+                {
                     Membership = EMembership.Join
                 }
             });
         }
 
-        [ExpectedException(typeof(Exception))]
         [TestMethod]
-        public void TestInsertEventsPDU_UserJoin_Private_InviteJoin(){
-            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(roomId,creatorUser);
-            graph.InsertEvents(new PDUEvent(){
+        public void TestInsertEventsPDU_UserJoin_Private_InviteJoin()
+        {
+            RoomGraph graph = RoomGraphTestUtil.BuildStandardRoomGraph(
+                TestRoomGraph.roomId,
+                TestRoomGraph.creatorUser,
+                EJoinRule.Invite
+            );
+            graph.InsertEvents(new PDUEvent()
+            {
                 Type = "m.room.member",
-                Sender = creatorUser,
-                RoomId = roomId,
+                Sender = TestRoomGraph.creatorUser,
+                RoomId = TestRoomGraph.roomId,
                 EventId = EventID.Generate(RoomGraphTestUtil.DOMAIN),
-                Content = new RoomMember() {
+                Content = new RoomMember()
+                {
                     Membership = EMembership.Invite
                 }
-            }, new PDUEvent(){
+            }, new PDUEvent()
+            {
                 Type = "m.room.member",
-                Sender = joinerUser,
-                RoomId = roomId,
+                Sender = TestRoomGraph.joinerUser,
+                RoomId = TestRoomGraph.roomId,
                 EventId = EventID.Generate(RoomGraphTestUtil.DOMAIN),
-                Content = new RoomMember() {
+                Content = new RoomMember()
+                {
                     Membership = EMembership.Join
                 }
             });
         }
+    }
+}
