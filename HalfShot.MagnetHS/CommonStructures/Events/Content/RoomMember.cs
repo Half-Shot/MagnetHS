@@ -14,5 +14,14 @@ namespace HalfShot.MagnetHS.CommonStructures.Events.Content
     
         public bool IsDirect { get; set; }
         //public ThirdPatyInvite
+        public void FromJsonContent(string json)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object ToCanonicalObject()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
