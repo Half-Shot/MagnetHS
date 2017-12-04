@@ -1,7 +1,10 @@
-﻿namespace HalfShot.MagnetHS.CommonStructures.Requests.User
+﻿using System;
+
+namespace HalfShot.MagnetHS.CommonStructures.Requests.User
 {
-    public class GetAccessTokenUser
+    [Serializable]
+    public class GetAccessTokenUser : MessageQueue.MQRequest
     {
-        
+        public string AccessToken { get; set; }
     }
 }

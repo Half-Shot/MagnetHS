@@ -6,7 +6,7 @@ using HalfShot.MagnetHS.CommonStructures.Responses;
 using HalfShot.MagnetHS.MessageQueue;
 namespace HalfShot.MagnetHS.UserService
 {
-    class UserService
+    static class UserService
     {
         static IMessageQueue IncomingQueue;
         static IMessageQueue DbQueue;
@@ -32,8 +32,6 @@ namespace HalfShot.MagnetHS.UserService
                             break;
                         case "LoginRequest":
                             response = HandleLoginRequest(request as LoginRequest);
-                            break;
-                        default:
                             break;
                     }
                 }

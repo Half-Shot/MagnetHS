@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataTransformer\DataTransformer.csproj" />
+    <ProjectReference Include="..\MessageQueue\Connector\MessageQueue.Connector.csproj" />
     <ProjectReference Include="..\MessageQueue\MessageQueue\MessageQueue.csproj" />
   </ItemGroup>
   <ItemGroup>
