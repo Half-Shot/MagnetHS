@@ -2,7 +2,7 @@
 
 namespace HalfShot.MagnetHS.MessageQueue
 {
-    public interface IMessageQueue
+    public interface IMessageQueue : IDisposable
     {
         TimeSpan RecieveTimeout { get; set; }
         void Request(MQRequest request);

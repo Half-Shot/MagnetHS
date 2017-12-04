@@ -29,5 +29,10 @@ namespace HalfShot.MagnetHS.MessageQueue.Mocks
         {
             // We do nothing here.
         }
+
+        public void Dispose()
+        {
+            // Do nothing.
+        }
     }
 }

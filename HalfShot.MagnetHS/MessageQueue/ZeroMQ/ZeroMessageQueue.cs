@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace HalfShot.MagnetHS.MessageQueue.ZMQ
 {
-    public class ZeroMessageQueue : IMessageQueue, IDisposable
+    public class ZeroMessageQueue : IMessageQueue
     {
-        NetMQSocket socket;
+        private NetMQSocket _socket;
 
         public TimeSpan RecieveTimeout { get; set; } = TimeSpan.MaxValue;
 
@@ -17,20 +17,20 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
             switch (mqType)
             {
                 case EMQType.Request:
-                    socket = new RequestSocket();
-                    socket.Bind(connectionString);
+                    _socket = new RequestSocket();
+                    _socket.Bind(connectionString);
                     break;
                 case EMQType.Respond:
-                    socket = new ResponseSocket();
-                    socket.Connect(connectionString);
+                    _socket = new ResponseSocket();
+                    _socket.Connect(connectionString);
                     break;
                 case EMQType.Push:
-                    socket = new PushSocket();
-                    socket.Connect(connectionString);
+                    _socket = new PushSocket();
+                    _socket.Connect(connectionString);
                     break;
                 case EMQType.Pull:
-                    socket = new PullSocket();
-                    socket.Bind(connectionString);
+                    _socket = new PullSocket();
+                    _socket.Bind(connectionString);
                     break;
                 default:
                     throw new NotSupportedException("Cannot create a queue of this type. Not supported!");
@@ -39,14 +39,14 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
 
         public MQRequest ListenForRequest()
         {
-            List<byte[]> frames = socket.ReceiveMultipartBytes(2);
+            var frames = _socket.ReceiveMultipartBytes(2);
             return MQItem.FromBytes<MQRequest>(frames[1]);
         }
 
         public MQResponse ListenForResponse()
         {
-            List<byte[]> frames = new List<byte[]>(2);
-            if (!socket.TryReceiveMultipartBytes(RecieveTimeout, ref frames, 2))
+            var frames = new List<byte[]>(2);
+            if (!_socket.TryReceiveMultipartBytes(RecieveTimeout, ref frames, 2))
             {
                 throw new TimeoutException("Timeout when waiting for a response from the MQ");
             }
@@ -67,15 +67,12 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
         {
             var header = item.GetHeader();
             var data = item.GetBytes();
-            socket.SendMultipartBytes(header, data);
+            _socket.SendMultipartBytes(header, data);
         }
 
         public void Dispose()
         {
-            if (socket != null)
-            {
-                socket.Dispose();
-            }
+            _socket?.Dispose();
         }
     }
 }
