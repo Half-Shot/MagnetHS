@@ -17,7 +17,7 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
             MockRoomEventStore store = new MockRoomEventStore();
             RoomGraph graph = new RoomGraph(roomId);
             var powerLevels = new RoomPowerLevels();
-            powerLevels.Users.Add(creator, 100);
+            powerLevels.Users.Add(creator.ToString(), 100);
             graph.SetEventSource(store);
             graph.InsertEvents(
                 new PDUEvent(){
@@ -53,7 +53,6 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
                     }
                 }
             );
-            graph.FetchState();
             return graph;
         }
     }

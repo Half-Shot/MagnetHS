@@ -21,6 +21,7 @@ namespace HalfShot.MagnetHS.Tests.Services.RoomService
                 roomId,
                 creatorUser
             );
+            Assert.AreEqual(4, graph.Depth);
         }
     }
 }
