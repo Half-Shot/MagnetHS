@@ -31,6 +31,7 @@ namespace HalfShot.MagnetHS.Core
                 new ServiceProcessDefinition("MagnetHS.UserService.dll", "User Service", 1, Path.Combine(rootConfigPath, "user.service.yaml")),
                 new ServiceProcessDefinition("MagnetHS.DatastoreService.dll", "Datastore Service", 1, Path.Combine(rootConfigPath, "datastore.service.yaml")),
                 new ServiceProcessDefinition("MagnetHS.LogService.dll", "Log Service", 1, Path.Combine(rootConfigPath, "log.service.yaml")),
+                new ServiceProcessDefinition("MagnetHS.RoomService.dll", "Room Service", 1, Path.Combine(rootConfigPath, "room.service.yaml")),
                 //new ServiceProcessDefinition("MagnetHS.ConfigurationService.dll", "Configuration Service"),
             };
             // Spin up some services
@@ -54,14 +55,14 @@ namespace HalfShot.MagnetHS.Core
             {
                 if(service.Key.HasExited)
                 {
-                    Logger.Warn("Process has exited!");
+                    Logger.Warn($"Process {service.Value.Name} has exited!");
                     processesToPop.Add(service.Key, service.Value);
                 }
             }
             foreach (var service in processesToPop)
             {
                 runningServices.Remove(service.Key);
-                Logger.Info("Process has been removed!");
+                Logger.Info($"Process {service.Value.Name} has been removed!");
                 Task.Delay(serviceRestartPeriodMs).ContinueWith((t) =>
                 {
                     StartProcess(service.Value, 1);
