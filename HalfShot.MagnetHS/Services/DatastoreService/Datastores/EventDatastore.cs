@@ -55,7 +55,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
             List<PDUEvent> pduEvents = new List<PDUEvent>();
             foreach (EventRecord evRecord in eventRecords)
             {
-                var pduEvent = HiderateEvent(evRecord);
+                var pduEvent = HidrateEvent(evRecord);
                 pduEvent.Hashes = new EventHash();
                 pduEvent.Hashes.SHA256 = hashRecords.First((record) => evRecord.EventId == record.EventId && record.HashType == "SHA256").Value;
                 //Get parents
@@ -123,7 +123,7 @@ namespace HalfShot.MagnetHS.DatastoreService.Datastores
             }
         }
 
-        private PDUEvent HiderateEvent(EventRecord eventRecord)
+        private PDUEvent HidrateEvent(EventRecord eventRecord)
         {
             PDUEvent pduEvent = new PDUEvent();
             pduEvent.JsonContent = eventRecord.Content;

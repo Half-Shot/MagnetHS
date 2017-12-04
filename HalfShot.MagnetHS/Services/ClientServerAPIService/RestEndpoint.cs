@@ -13,37 +13,25 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
         readonly Regex endpoint;
         readonly bool authRequired;
 
-        public string Method
-        {
-            get { return method; }
-        }
+        public string Method => method;
 
-        public Regex Endpoint
-        {
-            get { return endpoint; }
-        }
+        public Regex Endpoint => endpoint;
 
-        public bool AuthRequired
-        {
-            get { return authRequired; }
-        }
-        
-        public RestEndPointAttribute(string method)
+        public bool AuthRequired => authRequired;
+
+        public RestEndPointAttribute(string method, string endpoint = null, bool authRequired = false)
         {
             this.method = method;
-            this.endpoint = null;
-        }
-
-        public RestEndPointAttribute(string method, string endpoint, bool authRequired = false)
-        {
-            this.method = method;
-            this.endpoint = new Regex(endpoint, RegexOptions.Compiled);
+            if (endpoint != null)
+            {
+                this.endpoint = new Regex(endpoint, RegexOptions.Compiled);
+            }
             this.authRequired = authRequired;
         }
 
         public bool URLMatch(string url)
         {
-            return endpoint != null ? (endpoint.IsMatch(url)) : (String.IsNullOrWhiteSpace(url));
+            return endpoint?.IsMatch(url) ?? (String.IsNullOrWhiteSpace(url));
         }
         
     }

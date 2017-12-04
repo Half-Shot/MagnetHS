@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Linq;
 using HalfShot.MagnetHS.ClientServerAPIService.Exceptions;
 using HalfShot.MagnetHS.ClientServerAPIService.Responses;
+using HalfShot.MagnetHS.CommonStructures.ServiceClient;
 
 namespace HalfShot.MagnetHS.ClientServerAPIService
 {
@@ -50,7 +51,7 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
                             if(endpoint.AuthRequired)
                             {
                                 RestError badLoginResponse;
-                                if (!AuthenticateUser(context, out badLoginResponse))
+                                if (!AuthenticateUser(ctx, out badLoginResponse))
                                 {
                                     throw badLoginResponse;
                                 }
@@ -137,14 +138,14 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
             }
         }
 
-        private bool AuthenticateUser(HttpListenerContext context, out RestError err)
+        private bool AuthenticateUser(RestContext context, out RestError err)
         {
             err = null;
-            string access_token = context.Request.QueryString.Get("access_token");
+            string access_token = context.HttpContext.Request.QueryString.Get("access_token");
             // Fall back to header.
             if(access_token == null)
             {
-                access_token = context.Request.Headers.Get("Authorization");
+                access_token = context.HttpContext.Request.Headers.Get("Authorization");
                 if (access_token == null)
                 {
                     err = new RestError("Missing access token.", "M_MISSING_TOKEN") { StatusCode = 401 };
@@ -157,9 +158,13 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
                 }
                 access_token = access_token.Substring("Bearer ".Length);
             }
-            //TODO: Proper auth.
-
-            return true; 
+            using (var userService = new UserServiceClient())
+            {
+                var user = userService.GetUserFromToken(access_token);
+                if (user == null) return false;
+                context.AuthenticatedUser = user;
+                return true;
+            } 
         }
 
         //protected bool TryReadPayload(RestContext context, out object obj)

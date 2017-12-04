@@ -4,6 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using HalfShot.MagnetHS.DataTransformer;
 using System.Collections.Specialized;
+using HalfShot.MagnetHS.CommonStructures;
 
 namespace HalfShot.MagnetHS.ClientServerAPIService
 {
@@ -21,11 +22,12 @@ namespace HalfShot.MagnetHS.ClientServerAPIService
         public HttpListenerContext HttpContext { get; private set; }
 
         private ERestContentType expectedType;
-        public ERestContentType SuggestedContentType { get { return expectedType; } }
+        public ERestContentType SuggestedContentType => expectedType;
         public IDataTransformer DataTransformer { get; private set; }
-        public NameValueCollection Parameters { get { return HttpContext.Request.QueryString; } }
-        public Dictionary<string, string> PathParameters { get; private set; }
-        public int RequestId { get; set; }
+        public NameValueCollection Parameters => HttpContext.Request.QueryString;
+        public Dictionary<string, string> PathParameters { get; }
+        public int RequestId { get; }
+        public UserID AuthenticatedUser { get; set; }
 
         public RestContext()
         {
