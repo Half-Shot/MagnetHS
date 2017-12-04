@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
 {
-    [RestPath("rooms")]
+    [RestPath("r0/rooms")]
     class RoomController : RestController
     {
         IMessageQueue roomMQ;

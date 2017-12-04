@@ -1,0 +1,6 @@
+maxUploadSize: 50M
+storageSystems:
+  - name: "Filesystem Storage Alpha"
+    type: localfs
+    options:
+      - directory: "/tmp/magneths_storage"

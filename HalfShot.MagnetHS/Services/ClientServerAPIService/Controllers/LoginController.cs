@@ -11,7 +11,7 @@ using HalfShot.MagnetHS.CommonStructures.Responses;
 
 namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
 {
-    [RestPath("login")]
+    [RestPath("r0/login")]
     class LoginController : RestController
     {
         IMessageQueue userMQ;

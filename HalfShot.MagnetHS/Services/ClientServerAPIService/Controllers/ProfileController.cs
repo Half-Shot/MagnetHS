@@ -9,7 +9,7 @@ using System.IO;
 
 namespace HalfShot.MagnetHS.ClientServerAPIService.Controllers
 {
-    [RestPath("profile")]
+    [RestPath("r0/profile")]
     class ProfileController : RestController
     {
         IMessageQueue userMQ;
