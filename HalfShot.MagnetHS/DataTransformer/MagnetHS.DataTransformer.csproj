@@ -1,17 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RootNamespace>HalfShot.MagnetHS.MessageQueue.ZMQ</RootNamespace>
-    <AssemblyName>MessageQueue.ZMQ</AssemblyName>
+    <AssemblyName>MagnetHS.DataTransformer</AssemblyName>
+    <RootNamespace>HalfShot.MagnetHS.DataTransformer</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NetMQ" Version="4.0.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MessageQueue\MessageQueue.csproj" />
+    <PackageReference Include="MsgPack.Cli" Version="0.9.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="YamlDotNet" Version="4.2.2" />
   </ItemGroup>
 </Project>

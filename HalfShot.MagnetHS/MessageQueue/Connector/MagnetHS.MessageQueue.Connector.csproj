@@ -1,19 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>HalfShot.MagnetHS.MessageQueue.Connector</RootNamespace>
     <AssemblyName>MagnetHS.MessageQueue.Connector</AssemblyName>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\MessageQueue\MessageQueue.csproj" />
-    <ProjectReference Include="..\ZeroMQ\MessageQueue.ZMQ.csproj" />
+    <ProjectReference Include="..\Types\MagnetHS.MessageQueue.Types.csproj" />
+    <ProjectReference Include="..\ZeroMQ\MagnetHS.MessageQueue.ZMQ.csproj" />
   </ItemGroup>
-
 </Project>

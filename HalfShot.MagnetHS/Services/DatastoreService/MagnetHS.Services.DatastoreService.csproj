@@ -20,10 +20,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CommonStructures\CommonStructures.csproj" />
-    <ProjectReference Include="..\..\Logging\Logging.csproj" />
-    <ProjectReference Include="..\..\MessageQueue\Connector\MessageQueue.Connector.csproj" />
-    <ProjectReference Include="..\..\MessageQueue\MessageQueue\MessageQueue.csproj" />
+    <ProjectReference Include="..\..\CommonStructures\MagnetHS.CommonStructures.csproj" />
+    <ProjectReference Include="..\..\Logging\MagnetHS.Logging.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\Connector\MagnetHS.MessageQueue.Connector.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\Types\MagnetHS.MessageQueue.Types.csproj" />
   </ItemGroup>
 
   <ItemGroup>

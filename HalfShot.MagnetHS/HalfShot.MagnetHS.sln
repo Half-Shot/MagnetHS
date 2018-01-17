@@ -3,52 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetHS", "MagnetHS\MagnetHS.csproj", "{545A3A9E-A0A4-436C-9831-9DB00562BB5F}"
+
+# Core projects
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\MagnetHS.Core.csproj", "{545A3A9E-A0A4-436C-9831-9DB00562BB5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{044FE5EC-D2AB-43A0-BADF-91AF789C8650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonStructures", "CommonStructures\MagnetHS.CommonStructures.csproj", "{677A8D0D-E87F-4398-A2DD-0B976C382788}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientServerAPIService", "Services\ClientServerAPIService\ClientServerAPIService.csproj", "{66FFD6F2-342F-4279-B769-C51291A9D587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransformer", "DataTransformer\MagnetHS.DataTransformer.csproj", "{857ED6D3-7F0A-4E3D-9CA9-CB72E0390D4D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\MagnetHS.Logging.csproj", "{FBA5BE70-F540-43D8-A01D-F97711341D98}"
+EndProject
+
+# Tests
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\MagnetHS.Tests.csproj", "{E235701C-3ECC-4CB7-9A4A-7D615BE29065}"
+EndProject
+
+# MessageQueue
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageQueue", "MessageQueue", "{BD37AC20-187F-4813-BF14-D848701FDFCB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue", "MessageQueue\MessageQueue\MessageQueue.csproj", "{744BEA5C-3435-4BD1-AE75-B941385AC7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue", "MessageQueue\Types\MagnetHS.MessageQueue.Types.csproj", "{744BEA5C-3435-4BD1-AE75-B941385AC7D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonStructures", "CommonStructures\CommonStructures.csproj", "{677A8D0D-E87F-4398-A2DD-0B976C382788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue.ZMQ", "MessageQueue\ZeroMQ\MagnetHS.MessageQueue.ZMQ.csproj", "{A0E2B988-20F8-4E4F-8DEE-04BDB7AD9F9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue.ZMQ", "MessageQueue\ZeroMQ\MessageQueue.ZMQ.csproj", "{A0E2B988-20F8-4E4F-8DEE-04BDB7AD9F9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue.Connector", "MessageQueue\Connector\MagnetHS.MessageQueue.Connector.csproj", "{F452939D-ACF5-49FC-B568-D33DC163BF2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageQueue.Connector", "MessageQueue\Connector\MessageQueue.Connector.csproj", "{F452939D-ACF5-49FC-B568-D33DC163BF2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageQueue.Mocks", "MessageQueue\Mocks\MagnetHS.MessageQueue.Mocks.csproj", "{28C348D4-7533-460C-A815-49E46F2B85F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransformer", "DataTransformer\DataTransformer.csproj", "{857ED6D3-7F0A-4E3D-9CA9-CB72E0390D4D}"
+
+#Services
+
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{044FE5EC-D2AB-43A0-BADF-91AF789C8650}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "Services\UserService\UserService.csproj", "{1BFE5B98-B238-4B4B-923A-028506D84C88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientServerAPIService", "Services\ClientServerAPIService\MagnetHS.Services.ClientServerAPIService.csproj", "{66FFD6F2-342F-4279-B769-C51291A9D587}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatastoreService", "Services\DatastoreService\DatastoreService.csproj", "{F49C93A9-1409-4788-9404-34FC0707F2E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService", "Services\UserService\MagnetHS.Services.UserService.csproj", "{1BFE5B98-B238-4B4B-923A-028506D84C88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E235701C-3ECC-4CB7-9A4A-7D615BE29065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatastoreService", "Services\DatastoreService\MagnetHS.Services.DatastoreService.csproj", "{F49C93A9-1409-4788-9404-34FC0707F2E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomService", "Services\RoomService\RoomService.csproj", "{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoomService", "Services\RoomService\MagnetHS.Services.RoomService.csproj", "{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB7F6D8F-1D0B-4D6B-8DCC-076C04F73560}"
-	ProjectSection(SolutionItems) = preProject
-		..\LICENSE = ..\LICENSE
-		..\docs\message_queueing.md = ..\docs\message_queueing.md
-		..\README.md = ..\README.md
-		..\docs\services.md = ..\docs\services.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogService", "Services\LogService\MagnetHS.Services.LogService.csproj", "{DDC3098B-3D8E-4FD9-B7D4-A901B9108B92}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{CB03B415-2C82-4109-B09F-8984B2BBE158}"
-	ProjectSection(SolutionItems) = preProject
-		..\docs\message_queueing.md = ..\docs\message_queueing.md
-		..\docs\services.md = ..\docs\services.md
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogService", "Services\LogService\LogService.csproj", "{DDC3098B-3D8E-4FD9-B7D4-A901B9108B92}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\Logging.csproj", "{FBA5BE70-F540-43D8-A01D-F97711341D98}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageQueue.Mocks", "MessageQueue.Mocks\MessageQueue.Mocks.csproj", "{28C348D4-7533-460C-A815-49E46F2B85F9}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,7 +120,6 @@ Global
 		{1BFE5B98-B238-4B4B-923A-028506D84C88} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{F49C93A9-1409-4788-9404-34FC0707F2E6} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{C72EFD7C-FC57-4B54-A75F-1DA8E00A9ECB} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
-		{CB03B415-2C82-4109-B09F-8984B2BBE158} = {EB7F6D8F-1D0B-4D6B-8DCC-076C04F73560}
 		{DDC3098B-3D8E-4FD9-B7D4-A901B9108B92} = {044FE5EC-D2AB-43A0-BADF-91AF789C8650}
 		{28C348D4-7533-460C-A815-49E46F2B85F9} = {BD37AC20-187F-4813-BF14-D848701FDFCB}
 	EndGlobalSection

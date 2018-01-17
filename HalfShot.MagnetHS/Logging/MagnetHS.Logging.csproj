@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>HalfShot.MagnetHS</RootNamespace>
+    <AssemblyName>MagnetHS.Logging</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommonStructures\MagnetHS.CommonStructures.csproj" />
+    <ProjectReference Include="..\MessageQueue\Connector\MagnetHS.MessageQueue.Connector.csproj" />
+    <ProjectReference Include="..\MessageQueue\Types\MagnetHS.MessageQueue.Types.csproj" />
+  </ItemGroup>
+
+</Project>

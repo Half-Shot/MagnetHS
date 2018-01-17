@@ -14,9 +14,9 @@
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DataTransformer\DataTransformer.csproj" />
-    <ProjectReference Include="..\..\Logging\Logging.csproj" />
-    <ProjectReference Include="..\..\MessageQueue\Connector\MessageQueue.Connector.csproj" />
-    <ProjectReference Include="..\..\MessageQueue\MessageQueue\MessageQueue.csproj" />
+    <ProjectReference Include="..\..\DataTransformer\MagnetHS.DataTransformer.csproj" />
+    <ProjectReference Include="..\..\Logging\MagnetHS.Logging.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\Connector\MagnetHS.MessageQueue.Connector.csproj" />
+    <ProjectReference Include="..\..\MessageQueue\Types\MagnetHS.MessageQueue.Types.csproj" />
   </ItemGroup>
 </Project>

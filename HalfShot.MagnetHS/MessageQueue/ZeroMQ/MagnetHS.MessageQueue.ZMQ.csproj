@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>HalfShot.MagnetHS.MessageQueue.ZMQ</RootNamespace>
+    <AssemblyName>MessageQueue.ZMQ</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Types\MagnetHS.MessageQueue.Types.csproj" />
+  </ItemGroup>
+</Project>

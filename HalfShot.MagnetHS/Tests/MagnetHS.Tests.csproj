@@ -11,9 +11,9 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonStructures\CommonStructures.csproj" />
-    <ProjectReference Include="..\Services\ClientServerAPIService\ClientServerAPIService.csproj" />
-    <ProjectReference Include="..\Services\DatastoreService\DatastoreService.csproj" />
-    <ProjectReference Include="..\Services\RoomService\RoomService.csproj" />
+    <ProjectReference Include="..\CommonStructures\MagnetHS.CommonStructures.csproj" />
+    <ProjectReference Include="..\Services\ClientServerAPIService\MagnetHS.Services.ClientServerAPIService.csproj" />
+    <ProjectReference Include="..\Services\DatastoreService\MagnetHS.Services.DatastoreService.csproj" />
+    <ProjectReference Include="..\Services\RoomService\MagnetHS.Services.RoomService.csproj" />
   </ItemGroup>
 </Project>

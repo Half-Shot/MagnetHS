@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommonStructures\CommonStructures.csproj" />
-    <ProjectReference Include="..\MessageQueue\MessageQueue\MessageQueue.csproj" />
+    <ProjectReference Include="..\..\CommonStructures\MagnetHS.CommonStructures.csproj" />
+    <ProjectReference Include="..\Types\MagnetHS.MessageQueue.Types.csproj" />
   </ItemGroup>
 
 </Project>
