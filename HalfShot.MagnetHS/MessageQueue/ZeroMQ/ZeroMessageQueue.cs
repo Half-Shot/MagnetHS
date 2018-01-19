@@ -10,10 +10,9 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
         private NetMQSocket _socket;
 
         public TimeSpan RecieveTimeout { get; set; } = TimeSpan.MaxValue;
-
-
-        public void Setup(string connectionString, EMQType mqType)
+        public void Setup(EMQService service, EMQType mqType)
         {
+            var connectionString = getConnStrForService(service);
             switch (mqType)
             {
                 case EMQType.Request:
@@ -74,5 +73,24 @@ namespace HalfShot.MagnetHS.MessageQueue.ZMQ
         {
             _socket?.Dispose();
         }
+
+        private static string getConnStrForService(EMQService service)
+        {
+            //TODO: Configurable connection strings
+            switch (service)
+            {
+                case EMQService.User:
+                    return "tcp://localhost:5555";
+                case EMQService.Datastore:
+                    return "tcp://localhost:5556";
+                case EMQService.Room:
+                    return "tcp://localhost:5557";
+                case EMQService.Logging:
+                    return "tcp://localhost:5558";
+                default:
+                    throw new InvalidOperationException("Unknown service");
+            }
+        }
+        
     }
 }

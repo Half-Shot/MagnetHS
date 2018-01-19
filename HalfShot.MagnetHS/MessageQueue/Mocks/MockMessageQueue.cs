@@ -25,7 +25,7 @@ namespace HalfShot.MagnetHS.MessageQueue.Mocks
             throw new NotImplementedException();
         }
 
-        public void Setup(string connectionString, EMQType mqType)
+        public void Setup(EMQService service, EMQType mqType)
         {
             // We do nothing here.
         }

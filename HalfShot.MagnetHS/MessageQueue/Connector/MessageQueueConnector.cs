@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using HalfShot.MagnetHS.MessageQueue.ZMQ;
+using MagnetHS.MessageQueue.RabbitMQ;
 
 namespace HalfShot.MagnetHS.MessageQueue
 {
-    public class MQConnector
+    public static class MQConnector
     {
-        public static TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(10);
+        private static TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(10);
         static Dictionary<EMQService, Type> serviceTypes = new Dictionary<EMQService, Type>();
-        static Type defaultType = typeof(ZeroMessageQueue);
+        static readonly Type defaultType = typeof(RabbitMessageQueue);
 
 
         public static void OverrideTypeForService<T>(EMQService service) where T: IMessageQueue
@@ -18,55 +19,49 @@ namespace HalfShot.MagnetHS.MessageQueue
 
         public static IMessageQueue GetResponder(EMQService service)
         {
-            IMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.Setup(getConnStrForService(service), EMQType.Respond);
+            IMessageQueue msgQueue = Activator.CreateInstance(getTypeForService(service)) as IMessageQueue;
+            msgQueue.Setup(service, EMQType.Respond);
             msgQueue.RecieveTimeout = DefaultTimeout;
             return msgQueue;
         }
 
         public static IMessageQueue GetRequester(EMQService service)
         {
-            IMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.Setup(getConnStrForService(service), EMQType.Request);
+            IMessageQueue msgQueue = Activator.CreateInstance(getTypeForService(service)) as IMessageQueue;
+            msgQueue.Setup(service, EMQType.Request);
             msgQueue.RecieveTimeout = DefaultTimeout;
             return msgQueue;
         }
 
         public static IMessageQueue GetPusher(EMQService service)
         {
-            IMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.Setup(getConnStrForService(service), EMQType.Push);
+            IMessageQueue msgQueue = Activator.CreateInstance(getTypeForService(service)) as IMessageQueue;
+            msgQueue.Setup(service, EMQType.Push);
             msgQueue.RecieveTimeout = DefaultTimeout;
             return msgQueue;
         }
 
         public static IMessageQueue GetPuller(EMQService service)
         {
-            IMessageQueue msgQueue = new ZeroMessageQueue();
-            msgQueue.Setup(getConnStrForService(service), EMQType.Pull);
+            IMessageQueue msgQueue = Activator.CreateInstance(getTypeForService(service)) as IMessageQueue;
+            msgQueue.Setup(service, EMQType.Pull);
             msgQueue.RecieveTimeout = DefaultTimeout;
             return msgQueue;
         }
 
-        private static string getConnStrForService(EMQService service)
-        {
-            //TODO: Configurable connection strings
-            switch (service)
-            {
-                case EMQService.User:
-                    return "tcp://localhost:5555";
-                case EMQService.Datastore:
-                    return "tcp://localhost:5556";
-                case EMQService.Room:
-                    return "tcp://localhost:5557";
-                case EMQService.Logging:
-                    return "tcp://localhost:5558";
-                default:
-                    throw new InvalidOperationException("Unknown service");
-            }
-        }
+//        /// <summary>
+//        /// This should only be called by a routing service
+//        /// </summary>
+//        /// <param name="service"></param>
+//        /// <returns></returns>
+//        public static MessageRouter GetRouter(EMQService service)
+//        {
+//            MessageRouter router = new ZeroMessageRouter(service);
+//            return router;
+//        }
 
-        private static Type GetTypeForService(EMQService service)
+
+        private static Type getTypeForService(EMQService service)
         {
             if (serviceTypes.ContainsKey(service))
             {

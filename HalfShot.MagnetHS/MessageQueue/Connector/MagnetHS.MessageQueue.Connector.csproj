@@ -9,6 +9,7 @@
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RabbitMQ\MagnetHS.MessageQueue.RabbitMQ.csproj" />
     <ProjectReference Include="..\Types\MagnetHS.MessageQueue.Types.csproj" />
     <ProjectReference Include="..\ZeroMQ\MagnetHS.MessageQueue.ZMQ.csproj" />
   </ItemGroup>
