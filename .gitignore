@@ -8,6 +8,8 @@
 /HalfShot.MagnetHS/**/obj
 /HalfShot.MagnetHS/**/bin
 
+**/build/**
+
 # Files
 *.dll
 *.deps
